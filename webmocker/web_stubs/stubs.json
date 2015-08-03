@@ -1,0 +1,137 @@
+[
+  {
+    "request": {
+      "method": "GET",
+      "url": "/some/thing"
+    },
+    "response": {
+      "status": 210,
+      "body": "{\"employees\":[{\"firstName\":\"John\", \"lastName\":\"Doe\"}, {\"firstName\":\"Anna\", \"lastName\":\"Smith\"},{\"firstName\":\"Peter\", \"lastName\":\"Jones\"}]}",
+      "headers": {
+        "Content-Type": "text/json",
+        "header1" :"respose Headers"
+      }
+    }
+  },
+   {
+    "request": {
+      "method": "GET",
+      "url": "/some/fromfile"
+    },
+    "response": {
+      "status": 210,
+      "body": "/web_stubs/stubs.json",
+      "headers": {
+        "Content-Type": "text/json",
+        "header1" :"respose Headers"
+      }
+    }
+  },
+    {
+      "request": {
+        "method": "POST",
+        "url": "/with/body",
+        "bodyPatterns": [
+            { "matches": "<status>OK</status>" }
+        ]
+    },
+    "response": {
+            "status": 270,
+            "body":"This is a POST Request with matches clause"
+    }
+},
+   {
+      "request": {
+        "method": "POST",
+        "url": "/with/body",
+        "bodyPatterns": [
+            { "matches": "<status>OK</status>" },
+            { "doesNotMatch": "<status>OK</status>123" }
+        ]
+    },
+    "response": {
+            "status": 270,
+            "body":"This is a POST Request with match and doesnot match clause"
+    }
+},
+  {
+      "request": {
+        "method": "POST",
+        "url": "/with/body",
+        "bodyPatterns": [
+            { "doesNotMatch": ".*ERROR.*" }
+        ]
+    },
+    "response": {
+            "status": 270,
+            "body":"This is a POST Request with doesnt match clause"
+    }
+},
+  {
+    "request": {
+        "method": "POST",
+        "url": "/with/headers",
+        "headers": {
+            "Content-Type": {
+                "equalTo": "text/xml"
+            },
+            "Accept": {
+                "matches": "text/json"
+            },
+            "Etag": {
+                "doesNotMatch": "ab+cd"
+            },
+            "X-Custom-Header": {
+                "contains": "2134"
+            }
+        }
+    },
+    "response": {
+            "status": 250,
+            "body" : "This request URL has headers"
+    }
+},
+  {
+    "request": {
+        "method": "GET",
+        "urlPath": "/with/query",
+        "queryParameters": {
+            "search": {
+                "contains": "Some text"
+            },
+          "firstName": {
+                "equalto": "paul"
+            },
+          "lastName": {
+                "matches": "inf.+?t"
+            },
+           "searchtext": {
+                "contains": "shelton"
+            }
+        }
+    },
+    "response": {
+            "status": 230,
+            "body": "This is a URL Path"
+    }
+},{
+    "request": {
+        "method": "GET",
+        "url": "/body"
+    },
+    "response": {
+        "status": 200,
+        "body": "Literal text to put in the body"
+    }
+},{
+    "request": {
+        "method": "POST",
+        "url": "/body/with_nopattern",
+        "body" : "this is body"
+    },
+    "response": {
+        "status": 200,
+        "body": "This is body with no pattern"
+    }
+}
+]
